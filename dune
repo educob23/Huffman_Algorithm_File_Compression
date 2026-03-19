@@ -1,0 +1,4 @@
+(executable
+ (name huff)
+ (libraries unix)
+ (promote (until-clean)))
