@@ -2,11 +2,9 @@ open Heap
 open Bs
 open Unix
 
-(*************************************************************************************************
-**************************************************************************************************
-***********************fonctions de création et de gestion des arbres*****************************
-**************************************************************************************************
-**************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonctions de création et de gestion des arbres
+   ----------------------------------------------------------------------- *)
 
 let input_code cin = 
   (*une fonction auxiliaire qui gère directement l’ exception*) 
@@ -67,7 +65,7 @@ let min_tab tab =
       | (ocu, abr)::t -> if ocu < min then aux t ocu abr
                         else aux t min elt
     in
-  aux tab 43504354 (Leaf(-1))(*Arbre Vide*)
+  aux tab max_int (Leaf(-1))(*Arbre Vide*)
   
 
 (**[elimine_min tab] elimine l'élément du tableau avec le moins d'ocurrences
@@ -123,11 +121,9 @@ let rec abr_to_list abr=
   aux abr "" []
 
 
-(*************************************************************************************************
-**************************************************************************************************
-***********************fonctions de gestion de la ligne de commande*******************************
-**************************************************************************************************
-**************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonctions de gestion de la ligne de commande
+   ----------------------------------------------------------------------- *)
 
 (**[get_extension fichier] récupère l'extension du fichier pour la décompression, ie le texte compris entre le dernier '_' et un '.'
    @param fichier le nom du fichier
@@ -145,12 +141,12 @@ let get_extension fichier =
   with Not_found -> "" (* Pas de `_` ou pas de `.` *)
    
   
-(**[elimine_extesion_compression filename] élimine l'extension du fichier pour la décompression, ie le texte après le dernier '_'
+(**[elimine_extension_compression filename] élimine l'extension du fichier pour la décompression, ie le texte après le dernier '_'
    @param filename le nom du fichier
    @return le nom du fichier sans l'extension
    @raise Not_found si on a pas trouvé pas d'extension
 *)
-let elimine_extesion_compression filename =
+let elimine_extension_compression filename =
   try
     let underscore_index = String.rindex filename '_' in
     let dot_index = String.rindex filename '.' in
@@ -173,11 +169,9 @@ let extension_sans_point fichier =
     else String.sub ext 1 (String.length ext - 1)
 
 
-(*************************************************************************************************
-**************************************************************************************************
-***************************fonctions de compression des fichiers**********************************
-**************************************************************************************************
-**************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonctions de compression des fichiers
+   ----------------------------------------------------------------------- *)
 
 (**[serialise_abr abr ostream] fonction qui sérialise l'arbre de Huffman dans le fichier compressé
   @param abr l'arbre de Huffman déjà calculé
@@ -232,11 +226,9 @@ let compresse fichier =
   compresse_caracteres is ostream os abr_lst
 
 
-(************************************************************************************************
-*************************************************************************************************
-***************************fonctions de décompression des fichiers*******************************
-*************************************************************************************************
-*************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonctions de décompression des fichiers
+   ----------------------------------------------------------------------- *)
 
 (**[deserealise_abr fichier istream] fonction qui rend l'arbre à partir du fichier compressé
   @param istream le flux d'entrée
@@ -315,7 +307,7 @@ let decompresse fichier =
   
   let is = open_in fichier in
   let istream = of_in_channel is in
-  let fichier_decoupe = elimine_extesion_compression fichier in
+  let fichier_decoupe = elimine_extension_compression fichier in
   
   let ostream = open_out ((Filename.remove_extension fichier_decoupe)^"_decompresse"^"."^get_extension fichier) in   
     
@@ -327,11 +319,9 @@ let decompresse fichier =
   ()
 
 
-(************************************************************************************************
-*************************************************************************************************
-***************************fonction de statistiques des fichiers*********************************
-*************************************************************************************************
-*************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonction de statistiques des fichiers
+   ----------------------------------------------------------------------- *)
 
 (** [stats fichier] affiche les statistiques de compression d'un fichier 
     @param fichier le fichier à compresser
@@ -353,11 +343,9 @@ let stats fichier =
   Printf.printf "Temps de compression : %f secondes\n" temps_compression
 
 
-(************************************************************************************************
-*************************************************************************************************
-***************************************fonctions de tests****************************************
-*************************************************************************************************
-*************************************************************************************************)
+(* -----------------------------------------------------------------------
+   Fonctions de tests
+   ----------------------------------------------------------------------- *)
 
 (**[egalite_entre_fichiers fichier1 fichier2] fonction qui compare deux fichiers pour voir s'ils sont égaux
   @param fichier1 le premier fichier

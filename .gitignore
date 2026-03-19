@@ -1,0 +1,26 @@
+# Dune build directory
+_build/
+
+# Dune workspace (local à chaque environnement)
+dune-workspace
+
+# Fichiers compilés OCaml
+*.byte
+*.native
+*.cmo
+*.cmi
+*.cmx
+*.cmxs
+*.o
+*.a
+
+# Fichiers générés par la compression
+*.hf
+*_decompresse.*
+
+# Merlin (éditeur)
+.merlin
+
+# Fichiers système
+.DS_Store
+Thumbs.db

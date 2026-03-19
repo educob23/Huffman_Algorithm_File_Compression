@@ -1,7 +1,6 @@
 type tree =
   | Leaf of int
   | Node of tree*tree
-  (*Rajouter Empty comme possible?*)
 
 
 let empty = Leaf (-1)
@@ -40,22 +39,6 @@ let find_min abr =
     in
     aux abr 257 (*Les valeurs de l'arbre sont comprises entre 0 et 255*)
 
-let remove_min abr = 
-  (*
-  let min = find_min abr in
-  let rec aux abr min abrcopie b = 
-    match abr with
-      | Leaf f -> if f = min then b = false
-      | Node (sarbg, sarbd) -> 
-          if b then begin abrcopie = add sarbg sarbd;
-                            aux sarbg min abrcopie b;
-                            aux sarbd min abrcopie b end
-        else
-          match sarbg, sarbd with
-            | Leaf f, _ ->  
-  in *)
-  failwith "todo"
-    
 
 let tree_to_list abr =
   let rec aux abr acc =

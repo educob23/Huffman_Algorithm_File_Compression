@@ -1,0 +1,17 @@
+ASCII : 
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789
+!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+
+Mathématiques : 
+∑ ∞ π √ ≠ ≤ ≥
+
+Chinois : 
+你好 世界 汉字
+
+Émojis : 
+😀 🧠 🚀 🌍
+
+Écritures diverses : 
+अ к α ע

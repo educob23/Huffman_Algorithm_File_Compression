@@ -18,10 +18,6 @@ val find_min : tree -> int
 (** [find_min h] returns the smallest elements of [h] w.r.t to 
     the generic comparison [<] *)
 
-val remove_min : tree -> 'a * tree
-(** [remove_min h] returns the pair of the smallest elements of [h] w.r.t to 
-    the generic comparison [<] and [h] where that element has been removed. *)
-
 val is_singleton : tree -> bool
 (** [is_singleton h] returns [true] if [h] contains one element *)
 
