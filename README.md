@@ -1,43 +1,42 @@
-# Huffman Algorithm — File Compression
+# Algorithme de Huffman — Compression de fichiers
 
-> Academic project (L2, Université Paris-Saclay) — Lossless file compression and decompression implemented in OCaml using the Huffman coding algorithm.
-
----
-
-## Overview
-
-This project implements a complete file compression and decompression pipeline based on **Huffman coding**, a greedy algorithm that assigns shorter binary codes to more frequent bytes. The result is a lossless compression format that works on any file type (text, PDF, binary, etc.).
-
-Key features:
-- Compression and decompression of any file type
-- Huffman tree serialized directly into the compressed file (no external dictionary needed)
-- Compression ratio statistics (size, time, percentage)
-- Automatic round-trip tests to verify integrity
+> Projet académique (L2, Université Paris-Saclay) — Compression et décompression de fichiers sans perte, implémentées en OCaml grâce à l'algorithme de Huffman.
 
 ---
 
-## Project Structure
+## Présentation
+
+Ce projet implémente un pipeline complet de compression et décompression de fichiers basé sur l'**algorithme de Huffman**, un algorithme qui attribue des codes binaires plus courts aux octets les plus fréquents. Le résultat est un format de compression sans perte qui fonctionne sur n'importe quel type de fichier (texte, PDF, binaire, etc.). Le rapport de projet complet est disponible dans [`docs/Rapport_de_projet.pdf`](docs/Rapport_de_projet.pdf).
+
+Fonctionnalités principales :
+- Compression et décompression de tout type de fichier
+- L'arbre de Huffman est sérialisé directement dans le fichier compressé (aucun dictionnaire externe nécessaire)
+- Statistiques de compression (taille, durée, taux)
+- Tests automatiques de cohérence (compression puis décompression)
+
+---
+
+## Structure du projet
 
 ```
 .
-├── huffman.ml       # Core algorithm: tree construction, compression, decompression
-├── huffman.mli      # (optional) Interface file
-├── heap.ml          # Binary tree type and utilities
-├── heap.mli         # Interface for the tree module
-├── bs.ml            # Bit-level I/O (read/write individual bits and bytes)
-├── bs.mli           # Interface for the bit stream module
-├── huff.ml          # Entry point: command-line argument parsing
-├── dune             # Build rules
-├── dune-project     # Dune project descriptor
-└── tests/           # Sample files for testing
+├── huffman.ml       # Algorithme principal : construction de l'arbre, compression, décompression
+├── heap.ml          # Type arbre binaire et utilitaires
+├── heap.mli         # Interface du module arbre
+├── bs.ml            # Entrées/sorties bit à bit (lecture et écriture de bits et d'octets)
+├── bs.mli           # Interface du module flux de bits
+├── huff.ml          # Point d'entrée : gestion des arguments en ligne de commande
+├── dune             # Règles de build
+├── dune-project     # Descripteur du projet Dune
+└── fichiers_tests/  # Fichiers d'exemple pour les tests
 ```
 
 ---
 
-## Requirements
+## Prérequis
 
 - [OCaml](https://ocaml.org/) ≥ 4.14
-- [opam](https://opam.ocaml.org/) (OCaml package manager)
+- [opam](https://opam.ocaml.org/) (gestionnaire de paquets OCaml)
 - [dune](https://dune.build/) ≥ 3.0
 
 ---
@@ -45,54 +44,54 @@ Key features:
 ## Installation
 
 ```bash
-# Clone the repository
+# Cloner le dépôt
 git clone https://github.com/educob23/Huffman_Algorithm_File_Compression.git
 cd Huffman_Algorithm_File_Compression
 
-# Install dependencies
+# Installer les dépendances
 opam install . --deps-only
 
-# Build
+# Compiler
 dune build
 ```
 
 ---
 
-## Usage
+## Utilisation
 
-### Compress a file
-
-```bash
-dune exec ./huff.exe -- compress <file>
-```
-
-Example:
+### Compresser un fichier
 
 ```bash
-dune exec ./huff.exe -- compress my_document.txt
-# Output: my_document_txt.hf
+dune exec ./huff.exe -- compress <fichier>
 ```
 
-### Decompress a file
+Exemple :
 
 ```bash
-dune exec ./huff.exe -- decompress <file.hf>
+dune exec ./huff.exe -- compress mon_document.txt
+# Résultat : mon_document_txt.hf
 ```
 
-Example:
+### Décompresser un fichier
 
 ```bash
-dune exec ./huff.exe -- decompress my_document_txt.hf
-# Output: my_document_decompresse.txt
+dune exec ./huff.exe -- decompress <fichier.hf>
 ```
 
-### Show compression statistics
+Exemple :
 
 ```bash
-dune exec ./huff.exe -- stats <file>
+dune exec ./huff.exe -- decompress mon_document_txt.hf
+# Résultat : mon_document_decompresse.txt
 ```
 
-Example output:
+### Afficher les statistiques de compression
+
+```bash
+dune exec ./huff.exe -- stats <fichier>
+```
+
+Exemple de sortie :
 
 ```
 Taille du fichier non compressé : 102400 octets
@@ -103,41 +102,29 @@ Temps de compression            : 0.043291 secondes
 
 ---
 
-## How It Works
+## Fonctionnement
 
-1. **Frequency analysis** — The file is scanned byte by byte and the number of occurrences of each byte (0–255) is counted.
-2. **Priority queue construction** — Only the bytes that actually appear in the file are kept, sorted by frequency.
-3. **Huffman tree construction** — The two nodes with the lowest frequency are repeatedly merged into a parent node until a single tree remains.
-4. **Code table generation** — The tree is traversed to assign a binary code to each byte (`0` = left branch, `1` = right branch). Frequent bytes get shorter codes.
-5. **Serialization** — The tree structure is written at the beginning of the compressed file so that decompression requires no external data.
-6. **Encoding** — Each byte of the original file is replaced by its Huffman code, and the result is written bit by bit.
-7. **Decoding** — The tree is read from the compressed file, then bits are consumed one by one by traversing the tree until a leaf (= a byte) is reached.
+1. **Analyse des fréquences** — Le fichier est lu octet par octet et le nombre d'occurrences de chaque octet (0–255) est compté.
+2. **Construction de la file de priorité** — Seuls les octets présents dans le fichier sont conservés, triés par fréquence.
+3. **Construction de l'arbre de Huffman** — Les deux nœuds de plus faible fréquence sont fusionnés de manière répétée en un nœud parent, jusqu'à ce qu'il ne reste qu'un seul arbre.
+4. **Génération de la table de codes** — L'arbre est parcouru pour attribuer un code binaire à chaque octet (`0` = branche gauche, `1` = branche droite). Les octets fréquents obtiennent des codes plus courts.
+5. **Sérialisation** — La structure de l'arbre est écrite en début de fichier compressé, afin que la décompression ne nécessite aucune donnée externe.
+6. **Encodage** — Chaque octet du fichier original est remplacé par son code Huffman, et le résultat est écrit bit par bit.
+7. **Décodage** — L'arbre est lu depuis le fichier compressé, puis les bits sont consommés un par un en parcourant l'arbre jusqu'à atteindre une feuille (= un octet).
 
 ---
 
-## Running the Tests
+## Lancer les tests
 
 ```bash
 dune test
 ```
 
-The test suite compresses and then decompresses several file types (plain text, extended charset, binary) and verifies byte-for-byte that the output is identical to the original.
+La suite de tests compresse puis décompresse plusieurs types de fichiers (texte simple, jeu de caractères étendu, binaire) et vérifie octet par octet que le résultat est identique au fichier d'origine.
 
 ---
 
-## Limitations
+## Limites
 
-- Files containing only one distinct byte are not handled (a Huffman tree requires at least two distinct symbols).
-- Performance is not optimized for very large files (> 1 GB).
-
----
-
-## Academic Context
-
-This project was completed as part of the **L2 Computer Science** curriculum at **Université Paris-Saclay**. The full project report (in French) is available in [`docs/Rapport_de_projet.pdf`](docs/Rapport_de_projet.pdf).
-
----
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+- Les fichiers ne contenant qu'un seul octet distinct ne sont pas gérés (un arbre de Huffman nécessite au moins deux symboles distincts).
+- Les performances ne sont pas optimisées pour les très grands fichiers (> 1 Go).
