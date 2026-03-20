@@ -2,3 +2,8 @@
  (name huff)
  (libraries unix)
  (promote (until-clean)))
+
+(rule
+ (alias runtest)
+ (deps (source_tree fichiers_tests))
+ (action (run ./huff.exe --tests)))

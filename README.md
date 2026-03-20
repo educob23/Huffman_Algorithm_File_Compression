@@ -28,6 +28,7 @@ Fonctionnalités principales :
 ├── huff.ml          # Point d'entrée : gestion des arguments en ligne de commande
 ├── dune             # Règles de build
 ├── dune-project     # Descripteur du projet Dune
+├── scripts          # fichier pour lancer les tests qui bypass le warning root-detection
 └── fichiers_tests/  # Fichiers d'exemple pour les tests
 ```
 
@@ -62,33 +63,34 @@ dune build
 ### Compresser un fichier
 
 ```bash
-dune exec ./huff.exe -- compress <fichier>
+./scripts/compress.sh <fichier>
 ```
 
 Exemple :
 
 ```bash
-dune exec ./huff.exe -- compress mon_document.txt
-# Résultat : mon_document_txt.hf
+./scripts/compress.sh fichiers_tests/text.txt
+# Résultat : text_txt.hf
 ```
 
 ### Décompresser un fichier
 
 ```bash
-dune exec ./huff.exe -- decompress <fichier.hf>
+./scripts/decompress.sh <fichier>
 ```
 
 Exemple :
 
 ```bash
-dune exec ./huff.exe -- decompress mon_document_txt.hf
-# Résultat : mon_document_decompresse.txt
+./scripts/decompress.sh fichiers_tests/text_txt.hf
+# Résultat : text_decompresse.txt
 ```
 
 ### Afficher les statistiques de compression
+Compresse aussi le fichier
 
 ```bash
-dune exec ./huff.exe -- stats <fichier>
+./scripts/stats.sh <fichier>
 ```
 
 Exemple de sortie :
@@ -117,7 +119,7 @@ Temps de compression            : 0.043291 secondes
 ## Lancer les tests
 
 ```bash
-dune test
+./scripts/test.sh
 ```
 
 La suite de tests compresse puis décompresse plusieurs types de fichiers (texte simple, jeu de caractères étendu, binaire) et vérifie octet par octet que le résultat est identique au fichier d'origine.
