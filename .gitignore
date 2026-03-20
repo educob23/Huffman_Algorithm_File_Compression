@@ -10,6 +10,7 @@ _build/
 *.cmxs
 *.o
 *.a
+*.exe
 
 # Fichiers générés par la compression
 *.hf

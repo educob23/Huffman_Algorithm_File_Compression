@@ -52,10 +52,6 @@ cd Huffman_Algorithm_File_Compression
 # Installer les dépendances
 opam install . --deps-only
 
-# Compiler
-dune build
-```
-
 ---
 
 ## Utilisation
