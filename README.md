@@ -37,8 +37,8 @@ Fonctionnalités principales :
 ## Prérequis
 
 - [OCaml](https://ocaml.org/) ≥ 4.14
-- [opam](https://opam.ocaml.org/) (gestionnaire de paquets OCaml)
-- [dune](https://dune.build/) ≥ 3.0
+- [dune](https://dune.build/) ≥ 2.8
+- Un shell POSIX (`sh`, disponible par défaut sur Linux/macOS)
 
 ---
 
@@ -49,10 +49,10 @@ Fonctionnalités principales :
 git clone https://github.com/educob23/Huffman_Algorithm_File_Compression.git
 cd Huffman_Algorithm_File_Compression
 
-# Installer les dépendances
-opam install . --deps-only
+# Vérifier les versions
+ocaml -version
+dune --version
 ```
-
 ---
 
 ## Utilisation
